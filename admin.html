@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Staff | M. Wallace Memorials</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#292929">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Source+Sans+3:wght@300;400;600&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <a class="brand" href="./"><img src="img/monogram.png" alt="" width="97" height="40"><span><strong>M. Wallace Memorials</strong><small>Staff</small></span></a>
+      <div class="top-cta"><span class="muted" id="who"></span><a href="#" class="btn small ghost" id="signout" hidden>Sign out</a></div>
+    </div>
+  </header>
+
+  <main class="admin">
+    <div class="wrap">
+      <!-- Login -->
+      <div id="login-view" hidden>
+        <form class="panel login" id="login-form">
+          <h2 id="l-title">Staff login</h2>
+          <p class="muted">For Mark and the team. New here? Create an account, then ask an existing admin to approve you.</p>
+          <div class="field"><label for="l-email">Email</label><input id="l-email" type="email" autocomplete="username" required></div>
+          <div class="field"><label for="l-pass">Password</label><input id="l-pass" type="password" autocomplete="current-password" required minlength="8"></div>
+          <button class="btn block" type="submit" id="l-submit">Sign in</button>
+          <p class="error" id="l-error" hidden></p>
+          <p class="success" id="l-ok" hidden></p>
+          <p class="muted center" style="margin:16px 0 0"><a href="#" id="l-toggle">New staff member? Create an account</a></p>
+        </form>
+      </div>
+
+      <div id="pending-view" hidden>
+        <div class="panel login center">
+          <h2>Waiting for approval</h2>
+          <p>You're signed in as <strong id="p-email"></strong>. An existing admin needs to approve you under <em>Staff</em>. Once they have, reload this page.</p>
+          <button class="btn" type="button" onclick="location.reload()">Check again</button>
+        </div>
+      </div>
+
+      <!-- App -->
+      <div id="app-view" hidden>
+        <div class="tabs" role="tablist">
+          <button class="active" data-tab="add">Add a job</button>
+          <button data-tab="jobs">Jobs</button>
+          <button data-tab="enq">Enquiries <span class="badge" id="enq-badge"></span></button>
+          <button data-tab="staff">Staff <span class="badge" id="staff-badge"></span></button>
+        </div>
+
+        <!-- Add / edit job -->
+        <section data-pane="add" style="padding:0">
+          <form class="panel" id="job-form" novalidate>
+            <h2 id="jf-title" style="font-size:22px">Add a finished job</h2>
+            <p class="muted">Snap a few photos (before and after works best), pick the area, save. It appears on that area's page straight away.</p>
+            <input type="hidden" id="j-id">
+
+            <div class="field"><label>Photos</label>
+              <div class="photo-picker" id="j-photos"></div>
+              <div class="add-photos">
+                <label class="btn small"><input type="file" accept="image/*" capture="environment" id="j-camera">Take photo</label>
+                <label class="btn small ghost"><input type="file" accept="image/*" multiple id="j-library">Choose photos</label>
+              </div>
+              <p class="muted" style="font-size:14px;margin-top:-6px">Tap a photo to make it the cover. Photos are shrunk on your phone before upload.</p>
+            </div>
+
+            <div class="row2">
+              <div class="field"><label for="j-region">Area</label><select id="j-region" required></select></div>
+              <div class="field"><label for="j-town">Town</label><input id="j-town" list="towns" placeholder="e.g. Pitlochry"><datalist id="towns"></datalist></div>
+            </div>
+            <div class="field"><label for="j-cemetery">Cemetery or churchyard <span class="opt">(optional)</span></label><input id="j-cemetery" placeholder="e.g. Blair Atholl churchyard"></div>
+            <div class="row2">
+              <div class="field"><label for="j-service">Work done</label><select id="j-service" required></select></div>
+              <div class="field"><label for="j-stone">Stone <span class="opt">(optional)</span></label>
+                <select id="j-stone"><option value="">—</option><option>Granite</option><option>Marble</option><option>Sandstone</option><option>Slate</option><option>Other</option></select>
+              </div>
+            </div>
+            <div class="field"><label for="j-date">Date finished</label><input id="j-date" type="date"></div>
+            <div class="field"><label for="j-title">Headline <span class="opt">(optional)</span></label><input id="j-title" placeholder="Left blank: the name of the work done"></div>
+            <div class="field"><label for="j-desc">A line about it <span class="opt">(optional)</span></label><textarea id="j-desc" rows="2" placeholder="e.g. Full clean, lettering repainted and a raised lead inscription added"></textarea></div>
+
+            <fieldset>
+              <legend>Customer review (optional)</legend>
+              <div class="field"><label>Rating</label><div class="rating" id="j-rating"></div></div>
+              <div class="field"><label for="j-review">What they said</label><textarea id="j-review" rows="3"></textarea></div>
+              <div class="field"><label for="j-reviewer">Shown as</label><input id="j-reviewer" placeholder="e.g. Eleanor, Perth"></div>
+              <label class="check"><input type="checkbox" id="j-consent"> The customer is happy for this to go on the website</label>
+            </fieldset>
+
+            <label class="check"><input type="checkbox" id="j-published" checked> Show on the website</label>
+            <label class="check"><input type="checkbox" id="j-featured"> Feature at the top of its area</label>
+
+            <div class="hero-actions">
+              <button class="btn" type="submit" id="j-save">Save job</button>
+              <button class="btn ghost" type="button" id="j-cancel" hidden>Cancel edit</button>
+            </div>
+            <p class="error" id="j-error" hidden></p>
+            <p class="success" id="j-ok" hidden></p>
+          </form>
+        </section>
+
+        <section data-pane="jobs" hidden style="padding:0">
+          <div class="field" style="max-width:320px"><label for="jobs-filter">Area</label><select id="jobs-filter"><option value="">All areas</option></select></div>
+          <div class="list" id="jobs-list"></div>
+        </section>
+
+        <section data-pane="enq" hidden style="padding:0">
+          <div class="list" id="enq-list"></div>
+        </section>
+
+        <section data-pane="staff" hidden style="padding:0">
+          <h3>Waiting for approval</h3>
+          <div class="list" id="req-list"></div>
+          <h3 style="margin-top:28px">Admins</h3>
+          <div class="list" id="admin-list"></div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <script type="module" src="js/admin.js"></script>
+</body>
+</html>

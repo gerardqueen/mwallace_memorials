@@ -1,0 +1,36 @@
+{
+  "_note": "Customer recommendations from the M. Wallace Memorials Facebook page. Set \"region\" to an area slug (perth, fife, edinburgh, ...) once you know where the job was, and the review moves to the top of that area's page. Leave it null to show it everywhere.",
+  "source": "https://www.facebook.com/profile.php?id=61556696211749&sk=reviews",
+  "reviews": [
+    {
+      "name": "Eleanor G.",
+      "region": null,
+      "service": "inscriptions",
+      "text": "Mark did an incredible job with my grandparents' headstone, adding the new inscription for my grandad, regilding the existing inscription and washing and moving the statue that was in situ. He worked really closely with us and nothing was too much. His work was first class. The stone had some irregularities from 25 years ago and wasn't on centre, and Mark worked really well to get the best solution to this. I can't recommend him highly enough."
+    },
+    {
+      "name": "Scott B.",
+      "region": null,
+      "service": "restoration",
+      "text": "A massive thank you to Mark for the fantastic job done on my grandparents' gravestone. The second time he has put his skills to use, bringing the stone back to life and then updating the inscription after my gran's passing. Highly recommend Mark, great job done by a great guy!"
+    },
+    {
+      "name": "Jim R.",
+      "region": null,
+      "service": "inscriptions",
+      "text": "Did an excellent engraving on an existing grave stone. I would highly recommend Mark."
+    },
+    {
+      "name": "Brenda W.",
+      "region": null,
+      "service": null,
+      "text": "Fantastic, quality service! Mark goes above and beyond to satisfy his customers. We would highly recommend him."
+    },
+    {
+      "name": "Sharon H.",
+      "region": null,
+      "service": null,
+      "text": "Great job, over the moon with the completed job and a great price too. Would highly recommend."
+    }
+  ]
+}

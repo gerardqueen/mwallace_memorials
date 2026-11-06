@@ -1,0 +1,112 @@
+[
+  {
+    "key": "restoration",
+    "name": "Cleaning & restoration",
+    "kind": "Restore",
+    "line": "Weathered, green or blackened stones brought back so the letters can be read again.",
+    "card": "img/blair-atholl.jpg",
+    "head": "img/van-cemetery.jpg",
+    "desc": "Years of weather, lichen and moss leave a family stone dull and the inscription hard to read. We clean the whole memorial on site, then repaint or regild the lettering and replace any lead letters that have come away, so it looks as it did when it was first put up. We restore granite, marble (including Italian marble) and sandstone, from small headstones to large family monuments with carved crosses.",
+    "facts": [
+      "Full clean of the stone, base and any kerbs",
+      "Lettering repainted after cleaning",
+      "Missing or loose lead letters replaced",
+      "Plaques, statues and ornaments cleaned and reset"
+    ],
+    "steps": [
+      "We look at the stone first, because granite, marble and sandstone each need a different approach.",
+      "The memorial is cleaned in the cemetery with our portable equipment.",
+      "The inscription is repainted, regilded or re-leaded so it reads clearly again.",
+      "If you'd like a new inscription added at the same time, it's done in the same visit."
+    ],
+    "keywords": ["clean", "restor", "repaint", "renovat"]
+  },
+  {
+    "key": "inscriptions",
+    "name": "Additional inscriptions",
+    "kind": "Add a name",
+    "line": "A new name added to an existing family stone, matched to the lettering already there.",
+    "card": "img/hand-lettering.jpg",
+    "head": "img/hand-lettering.jpg",
+    "desc": "When a family stone needs another name, the new lettering should look as if it was always there. We cut additional inscriptions by hand in the cemetery, matching the style, size and spacing of the existing letters, even on old stones where the original mason's font is long out of use, or the first inscription isn't quite on centre.",
+    "facts": [
+      "Cut on site, so the stone stays where it is",
+      "Lettering matched to the existing inscription",
+      "Finished in lead, paint or gold leaf to match",
+      "Old or uneven stones laid out with care"
+    ],
+    "steps": [
+      "Send us a photo of the stone and the wording you'd like.",
+      "We draw the new inscription out to match the letters already on it.",
+      "The lettering is cut by hand on site.",
+      "It's finished to match the rest of the stone: lead, paint or gold."
+    ],
+    "keywords": ["inscription", "engrav", "name", "letter cut"]
+  },
+  {
+    "key": "lead",
+    "name": "Lead lettering",
+    "kind": "Traditional craft",
+    "line": "Raised and flush lead letters, done by hand the traditional way.",
+    "card": "img/old-lettering.jpg",
+    "head": "img/old-lettering-2.jpg",
+    "desc": "Lead lettering is one of the oldest ways of lettering a memorial and lasts for generations. We do both kinds by hand: raised lead, where the letters stand proud of the stone, and flush lead, set level with a polished face. It's slow, skilled work, and we're keeping the trade going by training the next letter cutter alongside us.",
+    "facts": [
+      "Raised lead and flush lead",
+      "New inscriptions and replacement letters",
+      "Matched to old fonts on existing stones",
+      "Hand-made chisels for the finishing cuts"
+    ],
+    "steps": [
+      "The inscription is drawn on by hand, matched as closely as possible to the existing letters.",
+      "Small holes are drilled into each letter, angled so the lead locks in like a fish-tail anchor.",
+      "Lead is beaten in and flattened to the right thickness, and the inscription is drawn back on.",
+      "Each letter is cut round with chisels of different sizes, curving the rounds by hand."
+    ],
+    "keywords": ["lead"]
+  },
+  {
+    "key": "gilding",
+    "name": "Gold leaf & painting",
+    "kind": "Finish",
+    "line": "Faded gold letters regilded, painted lettering renewed and gold border fillets.",
+    "card": "img/at-work.jpg",
+    "head": "img/at-work.jpg",
+    "desc": "Gold and painted lettering fades long before the stone does. We regild faded inscriptions in gold leaf, repaint lettering so it stands out from the stone again, and draw and cut decorative gold border fillets by hand. It's often the simplest way to make a family stone look cared for again.",
+    "facts": [
+      "Regilding of existing gold lettering",
+      "Repainting of faded or weathered letters",
+      "Hand-cut gold border fillets",
+      "Often combined with a clean or a new inscription"
+    ],
+    "steps": [
+      "We check the condition of the existing letters and the stone around them.",
+      "The letters are cleaned out so the new finish holds.",
+      "Gold leaf or paint is applied by hand, letter by letter.",
+      "Border lines and details are finished with a steady hand."
+    ],
+    "keywords": ["gild", "gold", "paint", "fillet"]
+  },
+  {
+    "key": "bespoke",
+    "name": "Plaques & bespoke stone",
+    "kind": "Made to order",
+    "line": "Personalised slate house plaques, memorial plaques and feature stones.",
+    "card": "img/churchyard-sun.jpg",
+    "head": "img/churchyard-sun.jpg",
+    "desc": "Lettering isn't only for the cemetery. We make personalised slate house name plaques, memorial plaques and one-off pieces such as a natural grey granite boulder with a company logo sandblasted into the face for a memorial garden. Bring us an idea or a design of your own and we'll make it happen.",
+    "facts": [
+      "Slate house name plaques",
+      "Memorial and remembrance plaques",
+      "Feature stones and boulders",
+      "Logos and designs sandblasted or hand cut"
+    ],
+    "steps": [
+      "Tell us what you have in mind, or send a sketch or design.",
+      "We agree the stone, size, wording and lettering style with you.",
+      "It's lettered by hand or sandblasted.",
+      "Delivery or fitting is agreed with you when you order."
+    ],
+    "keywords": ["plaque", "slate", "house", "boulder", "bespoke", "sandblast"]
+  }
+]

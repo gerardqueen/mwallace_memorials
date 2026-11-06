@@ -1,0 +1,162 @@
+{
+  "site": {
+    "url": "https://gerardqueen.github.io/mwallace_memorials/",
+    "noindex": true,
+    "name": "M. Wallace Memorials",
+    "activateAt": 1
+  },
+  "hub": {
+    "slug": "scotland",
+    "path": "",
+    "name": "Scotland",
+    "title": "Headstone Restoration & Additional Inscriptions in Scotland | M. Wallace Memorials",
+    "description": "Memorial cleaning and restoration, additional inscriptions and traditional raised and flush lead lettering, done by hand in cemeteries across Scotland. Based in Kinross-shire. Free quotes.",
+    "h1": "Headstone restoration &amp; inscriptions across Scotland",
+    "lede": "Memorial cleaning and restoration, additional inscriptions and traditional lead lettering, carried out by hand in cemeteries and kirkyards across Scotland.",
+    "towns": [],
+    "local": "We're a small team of letter cutters led by Mark Wallace, based in Kinross-shire. Most of our work is done in the cemetery itself, so the stone never has to leave the grave. Pick your area below to see work we've done nearby, or just send us a photo of the stone and we'll take it from there.",
+    "hero": "img/van-field.jpg"
+  },
+  "regions": [
+    {
+      "slug": "perth",
+      "path": "perth-kinross/",
+      "name": "Perth & Kinross",
+      "title": "Headstone Restoration & Inscriptions in Perth & Kinross | M. Wallace Memorials",
+      "description": "Memorial cleaning, additional inscriptions and lead lettering in cemeteries and churchyards across Perth & Kinross, from Kinross to Blair Atholl. Local, free quotes.",
+      "towns": ["Kinross", "Milnathort", "Perth", "Crieff", "Auchterarder", "Blairgowrie", "Dunkeld", "Pitlochry", "Aberfeldy", "Blair Atholl"],
+      "local": "We're based in Kinross-shire, so Perth & Kinross is our home patch: from Kinross and Milnathort up through Perth, Crieff and Dunkeld to Pitlochry and the churchyard at Blair Atholl, where we took the portable compressor for a recent job. If you'd like us to look at a stone nearby, it's never far out of our way.",
+      "hero": "img/blair-atholl.jpg"
+    },
+    {
+      "slug": "fife",
+      "path": "fife/",
+      "name": "Fife",
+      "title": "Headstone Restoration & Inscriptions in Fife | M. Wallace Memorials",
+      "description": "Headstone cleaning and restoration, additional inscriptions and traditional lead lettering in cemeteries and kirkyards across Fife. Free quotes from M. Wallace Memorials.",
+      "towns": ["Dunfermline", "Kirkcaldy", "Glenrothes", "Cowdenbeath", "Lochgelly", "Cupar", "St Andrews", "Leven", "Burntisland", "Anstruther"],
+      "local": "Fife is just over the hill from us in Kinross-shire, so whether the stone is in a town cemetery in Dunfermline or Kirkcaldy or an old kirkyard in the East Neuk, it's an easy run. A lot of Fife's older churchyard stones are soft sandstone with beautiful hand-cut lettering, so we always look closely at the stone before suggesting how far to take a clean.",
+      "hero": "img/churchyard-sun.jpg"
+    },
+    {
+      "slug": "edinburgh",
+      "path": "edinburgh/",
+      "name": "Edinburgh & the Lothians",
+      "title": "Headstone Restoration & Inscriptions in Edinburgh | M. Wallace Memorials",
+      "description": "Memorial cleaning, additional inscriptions, regilding and lead lettering in cemeteries across Edinburgh, Midlothian, East Lothian and West Lothian. Free quotes.",
+      "towns": ["Edinburgh", "Leith", "Musselburgh", "Dalkeith", "Penicuik", "Livingston", "Linlithgow", "South Queensferry", "Haddington", "North Berwick"],
+      "local": "From Kinross it's a straight run down the M90 and over the Forth, and we've already carried out work for families in Edinburgh. Whether it's a family lair in one of the city's Victorian cemeteries or a newer stone in a Lothians town, we'll clean, re-letter or add a name on site.",
+      "hero": "img/van-cemetery.jpg"
+    },
+    {
+      "slug": "dundee",
+      "path": "dundee-angus/",
+      "name": "Dundee & Angus",
+      "title": "Headstone Restoration & Inscriptions in Dundee & Angus | M. Wallace Memorials",
+      "description": "Headstone cleaning and restoration, additional inscriptions and lead lettering in cemeteries across Dundee and Angus. Free quotes from M. Wallace Memorials.",
+      "towns": ["Dundee", "Broughty Ferry", "Monifieth", "Carnoustie", "Arbroath", "Forfar", "Montrose", "Kirriemuir", "Brechin"],
+      "local": "Dundee and Angus are up the M90 and over the Tay from us. We clean and restore family stones, add new inscriptions to match the old ones and renew faded painted and gold lettering, all on site, so there's nothing for you to arrange except telling us where the stone is.",
+      "hero": "img/van-frost.jpg"
+    },
+    {
+      "slug": "central",
+      "path": "stirling-falkirk/",
+      "name": "Stirling, Falkirk & Clackmannanshire",
+      "title": "Headstone Restoration & Inscriptions in Stirling & Falkirk | M. Wallace Memorials",
+      "description": "Memorial restoration, additional inscriptions and traditional lead lettering in cemeteries across Stirling, Falkirk and Clackmannanshire. Free quotes.",
+      "towns": ["Stirling", "Bridge of Allan", "Dunblane", "Callander", "Alloa", "Tillicoultry", "Dollar", "Falkirk", "Larbert", "Grangemouth", "Bo'ness"],
+      "local": "Clackmannanshire, Stirling and Falkirk are our neighbours to the west, through Dollar or over the Kincardine Bridge. From village kirkyards in the Hillfoots to the big town cemeteries in Falkirk and Stirling, we'll come out, look at the stone and tell you what's involved.",
+      "hero": "img/van-field.jpg"
+    },
+    {
+      "slug": "glasgow",
+      "path": "glasgow/",
+      "name": "Glasgow & Dunbartonshire",
+      "title": "Headstone Restoration & Inscriptions in Glasgow | M. Wallace Memorials",
+      "description": "Headstone cleaning, additional inscriptions, regilding and lead lettering in cemeteries across Glasgow, East and West Dunbartonshire. Free quotes.",
+      "towns": ["Glasgow", "Bearsden", "Milngavie", "Bishopbriggs", "Kirkintilloch", "Clydebank", "Dumbarton", "Rutherglen"],
+      "local": "Glasgow is a straightforward run along the motorway from Kinross-shire. The city's cemeteries are full of fine granite and sandstone family monuments, many with lettering that has faded or lead letters that have come away, and that's exactly the kind of work we do.",
+      "hero": "img/van-cemetery.jpg"
+    },
+    {
+      "slug": "lanarkshire",
+      "path": "lanarkshire/",
+      "name": "Lanarkshire",
+      "title": "Headstone Restoration & Inscriptions in Lanarkshire | M. Wallace Memorials",
+      "description": "Memorial cleaning and restoration, additional inscriptions and lead lettering in cemeteries across North and South Lanarkshire. Free quotes.",
+      "towns": ["Hamilton", "East Kilbride", "Motherwell", "Wishaw", "Airdrie", "Coatbridge", "Cumbernauld", "Lanark", "Carluke"],
+      "local": "We cover North and South Lanarkshire, from Cumbernauld and Airdrie down to Hamilton, East Kilbride and Lanark. Send a photo of the stone and the wording you'd like added, and we'll give you a price before arranging a day to do the work in the cemetery.",
+      "hero": "img/van-frost.jpg"
+    },
+    {
+      "slug": "renfrewshire",
+      "path": "renfrewshire-inverclyde/",
+      "name": "Renfrewshire & Inverclyde",
+      "title": "Headstone Restoration & Inscriptions in Renfrewshire | M. Wallace Memorials",
+      "description": "Headstone cleaning, additional inscriptions and lead lettering in cemeteries across Renfrewshire, East Renfrewshire and Inverclyde. Free quotes.",
+      "towns": ["Paisley", "Renfrew", "Johnstone", "Erskine", "Newton Mearns", "Giffnock", "Barrhead", "Greenock", "Gourock"],
+      "local": "For Paisley, East Renfrewshire and down the coast to Greenock and Gourock, we try to line up jobs in the same area on the same trip. Send us a photo of the stone first and we can usually tell you what's involved before we come out.",
+      "hero": "img/at-work.jpg"
+    },
+    {
+      "slug": "ayrshire",
+      "path": "ayrshire/",
+      "name": "Ayrshire & Arran",
+      "title": "Headstone Restoration & Inscriptions in Ayrshire | M. Wallace Memorials",
+      "description": "Memorial cleaning, additional inscriptions and traditional lead lettering in cemeteries across North, East and South Ayrshire. Free quotes.",
+      "towns": ["Ayr", "Prestwick", "Troon", "Kilmarnock", "Irvine", "Largs", "Cumnock", "Girvan", "Isle of Arran"],
+      "local": "Ayrshire is a day trip for us, so we plan visits to group work in the same part of the county. We clean and restore stones, add new names to family memorials and renew lead, paint and gold lettering, all in the cemetery.",
+      "hero": "img/van-field.jpg"
+    },
+    {
+      "slug": "dumfries",
+      "path": "dumfries-galloway/",
+      "name": "Dumfries & Galloway",
+      "title": "Headstone Restoration & Inscriptions in Dumfries & Galloway | M. Wallace Memorials",
+      "description": "Headstone cleaning and restoration, additional inscriptions and lead lettering in cemeteries and kirkyards across Dumfries & Galloway. Free quotes.",
+      "towns": ["Dumfries", "Annan", "Lockerbie", "Moffat", "Castle Douglas", "Dalbeattie", "Kirkcudbright", "Newton Stewart", "Stranraer"],
+      "local": "Dumfries & Galloway is further afield for us, so we try to line up jobs in the same area for the same trip. Rural kirkyards here are full of old sandstone stones with hand-cut lettering, and matching that style for a new inscription is work we enjoy.",
+      "hero": "img/churchyard-sun.jpg"
+    },
+    {
+      "slug": "borders",
+      "path": "scottish-borders/",
+      "name": "the Scottish Borders",
+      "title": "Headstone Restoration & Inscriptions in the Scottish Borders | M. Wallace Memorials",
+      "description": "Memorial cleaning, additional inscriptions and traditional lead lettering in cemeteries across the Scottish Borders. Free quotes from M. Wallace Memorials.",
+      "towns": ["Galashiels", "Melrose", "Peebles", "Selkirk", "Kelso", "Jedburgh", "Hawick", "Duns", "Eyemouth"],
+      "local": "We cover the Borders towns from Peebles and Galashiels to Kelso, Hawick and Duns. Tell us which cemetery the stone is in and send a photo if you can; we'll give you a price and plan a visit, ideally alongside other work nearby.",
+      "hero": "img/van-frost.jpg"
+    },
+    {
+      "slug": "aberdeen",
+      "path": "aberdeen/",
+      "name": "Aberdeen & Aberdeenshire",
+      "title": "Headstone Restoration & Inscriptions in Aberdeen | M. Wallace Memorials",
+      "description": "Headstone cleaning, additional inscriptions, regilding and lead lettering in cemeteries across Aberdeen and Aberdeenshire. Free quotes.",
+      "towns": ["Aberdeen", "Stonehaven", "Banchory", "Westhill", "Inverurie", "Ellon", "Huntly", "Peterhead", "Fraserburgh"],
+      "local": "Aberdeen and the north east are granite country, and granite memorials clean up beautifully. For jobs this far north we plan trips to group work in the same area, so let us know where the stone is and what you'd like done.",
+      "hero": "img/van-cemetery.jpg"
+    },
+    {
+      "slug": "highlands",
+      "path": "highlands/",
+      "name": "Inverness, the Highlands & Moray",
+      "title": "Headstone Restoration & Inscriptions in the Highlands | M. Wallace Memorials",
+      "description": "Memorial cleaning and restoration, additional inscriptions and lead lettering in cemeteries across Inverness, the Highlands and Moray. Free quotes.",
+      "towns": ["Inverness", "Nairn", "Aviemore", "Kingussie", "Elgin", "Forres", "Dingwall", "Fort William"],
+      "local": "The A9 takes us north from Perthshire to Inverness, Speyside and Moray. Because it's a longer trip, we line up Highland jobs together, so get in touch with the cemetery and a photo of the stone and we'll let you know when we're next up.",
+      "hero": "img/van-field.jpg"
+    },
+    {
+      "slug": "argyll",
+      "path": "argyll-bute/",
+      "name": "Argyll & Bute",
+      "title": "Headstone Restoration & Inscriptions in Argyll & Bute | M. Wallace Memorials",
+      "description": "Headstone cleaning, additional inscriptions and lead lettering in cemeteries across Argyll and Bute, including the islands. Free quotes.",
+      "towns": ["Helensburgh", "Dunoon", "Rothesay", "Oban", "Inveraray", "Lochgilphead", "Campbeltown"],
+      "local": "We're happy to take the ferry: we've taken the van over to Rothesay on Bute for jobs. For Argyll and the islands we group work in the same area onto the same trip, so tell us where the stone is and we'll plan it in.",
+      "hero": "img/rothesay-ferry.jpg"
+    }
+  ]
+}
