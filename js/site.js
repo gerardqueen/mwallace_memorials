@@ -110,10 +110,16 @@ function show() {
   const j = cur.job; const n = j.photos.length;
   $('img', lb).src = j.photos[cur.i];
   $('img', lb).alt = jobTitle(j);
-  $('.lb-cap', lb).textContent = `${jobTitle(j)}${j.town ? ' · ' + j.town : ''}${n > 1 ? ` · ${cur.i + 1}/${n}` : ''}`;
+  $('.lb-cap', lb).textContent = j.caps ? j.caps[cur.i] : `${jobTitle(j)}${j.town ? ' · ' + j.town : ''}${n > 1 ? ` · ${cur.i + 1}/${n}` : ''}`;
   $('.lb-prev', lb).hidden = $('.lb-next', lb).hidden = n < 2;
 }
 document.addEventListener('click', (e) => {
+  const ba = e.target.closest('[data-ba]');
+  if (ba) {
+    const fig = ba.closest('.ba'); const imgs = $$('[data-ba]', fig);
+    cur = { job: { photos: imgs.map((x) => x.dataset.ba), title: fig.querySelector('figcaption').textContent, caps: imgs.map((x) => x.dataset.cap) }, i: imgs.indexOf(ba) };
+    show(); lb.showModal(); return;
+  }
   const b = e.target.closest('[data-job]');
   if (!b) return;
   const job = BY_ID[b.dataset.job]; if (!job) return;
@@ -130,6 +136,12 @@ lb.addEventListener('keydown', (e) => {
 let tx = 0;
 lb.addEventListener('touchstart', (e) => { tx = e.touches[0].clientX; }, { passive: true });
 lb.addEventListener('touchend', (e) => { const d = e.changedTouches[0].clientX - tx; if (Math.abs(d) > 50) (d > 0 ? $('.lb-prev', lb) : $('.lb-next', lb)).click(); });
+
+// "Designs you like" only appears when someone is asking about a new memorial.
+const typeSel = $('#q-type');
+const syncDesign = () => { $('.design-ref').hidden = typeSel.value !== 'memorials'; };
+typeSel.addEventListener('change', syncDesign); syncDesign();
+document.addEventListener('click', (e) => { if (e.target.closest('[data-quote-mat]')) setTimeout(syncDesign); });
 
 // ---------------- Enquiry photos ----------------
 let PHOTOS = []; // File[]
@@ -180,9 +192,10 @@ form.addEventListener('submit', async (e) => {
 
   const btn = $('button[type=submit]', form); btn.disabled = true;
   const row = {
-    name: f.name.trim(), phone: f.phone.trim(), email: f.email.trim(), service: f.service,
-    cemetery: f.cemetery.trim(), message: f.message?.trim() || null, region: REGION, page: location.pathname, photos: [],
+    name: f.name.trim(), phone: f.phone.trim(), email: f.email.trim(), service: f.service || 'not-sure',
+    cemetery: f.cemetery.trim(), message: f.message?.trim() || null, region: HUB ? (f.area || 'scotland') : REGION, page: location.pathname, photos: [],
   };
+  if (f.design?.trim() && f.service === 'memorials') row.message = [`Designs liked: ${f.design.trim()}`, row.message].filter(Boolean).join('\n\n');
   try {
     for (let i = 0; i < PHOTOS.length; i++) {
       btn.textContent = `Uploading photo ${i + 1} of ${PHOTOS.length}…`;
@@ -205,7 +218,8 @@ form.addEventListener('submit', async (e) => {
     console.error(err);
     const body = encodeURIComponent(`Name: ${row.name}\nPhone: ${row.phone}\nWhat: ${SERVICE_NAME[row.service] || row.service}\nWhere: ${row.cemetery}\n\n${row.message || ''}`);
     msg.className = 'form-msg err';
-    msg.innerHTML = `Sorry, that didn't send. Please call <a href="tel:${tel}">${SETTINGS.phone}</a>, <a href="https://wa.me/${SETTINGS.whatsapp}" target="_blank" rel="noopener">WhatsApp us</a> or <a href="mailto:${SETTINGS.email}?subject=${encodeURIComponent('Memorial enquiry')}&body=${body}">email your details</a>.`;
+    const mail = document.body.dataset.email || SETTINGS.email;
+    msg.innerHTML = `Sorry, that didn't send. Please call <a href="tel:${tel}">${SETTINGS.phone}</a>, <a href="https://wa.me/${SETTINGS.whatsapp}" target="_blank" rel="noopener">WhatsApp us</a> or <a href="mailto:${mail}?subject=${encodeURIComponent('Memorial enquiry')}&body=${body}">email your details</a>.`;
   } finally {
     btn.disabled = false; btn.textContent = 'Send my enquiry';
   }

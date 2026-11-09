@@ -20,11 +20,15 @@ export const C = {
   phone: '07827 665296', tel: '+447827665296', whatsapp: '447827665296', email: 'mwallacememorials@gmail.com',
   base: 'Kinross-shire', postcode: 'KY13',
   facebook: 'https://www.facebook.com/p/M-Wallace-Memorials-61556696211749/',
+  brochure: 'https://cjimports.com/b/mrzqm6h8',
 };
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
-const H1NAME = { central: 'Stirling &amp; Falkirk', highlands: 'the Highlands', glasgow: 'Glasgow', edinburgh: 'Edinburgh &amp; the Lothians', borders: 'the Scottish Borders' };
 const SERVICE_NAME = Object.fromEntries(SERVICES.map((s) => [s.key, s.name]));
+const BEFORE_AFTER = [
+  { before: 'img/mcmillan-before.jpg', after: 'img/mcmillan-after.jpg', alt: 'granite family monument', caption: 'Granite family monument: cleaned, moss and ivy removed, and every line of lettering renewed.' },
+  { before: 'img/cocozza-before.jpg', after: 'img/cocozza-after.jpg', alt: 'marble memorial with carved angel statue', caption: 'Italian marble memorial and angel statue: a full clean, with the lettering and detail brought back.' },
+];
 
 // ---------- Published jobs from Supabase ----------
 const cfg = readFileSync(join(root, 'js/config.js'), 'utf8');
@@ -97,18 +101,19 @@ const ICON = {
   fb: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 22v-8h2.7l.4-3.2h-3.1V8.8c0-.9.3-1.6 1.6-1.6h1.7V4.4a22 22 0 0 0-2.5-.1c-2.4 0-4.1 1.5-4.1 4.2v2.3H7.5V14h2.7v8z"/></svg>',
   pin: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 1 7 7c0 5-7 13-7 13S5 14 5 9a7 7 0 0 1 7-7zm0 4.5A2.5 2.5 0 1 0 12 11.5 2.5 2.5 0 0 0 12 6.5z"/></svg>',
   check: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>',
+  book: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v16H6.5a1.5 1.5 0 0 0 0 3H20v1H6.5A2.5 2.5 0 0 1 4 19.5zM8 6v2h8V6z"/></svg>',
   cam: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3 7.2 5H4a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-3.2L15 3zm3 5a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/></svg>',
 };
 const WA = (txt) => `https://wa.me/${C.whatsapp}?text=${encodeURIComponent(txt)}`;
 
 function serviceCard(s, up) {
-  return `<button class="mat-card" type="button" data-open-mat="${s.key}" aria-haspopup="dialog">
-            <img src="${up}${s.card}" alt="" loading="lazy" width="489" height="652">
+  return `<button class="mat-card${s.card ? '' : ' feature'}" type="button" data-open-mat="${s.key}" aria-haspopup="dialog">
+            ${s.card ? `<img src="${up}${s.card}" alt="" loading="lazy" width="489" height="652">` : ''}
             <span class="mat-body">
               <span class="mat-kind">${esc(s.kind)}</span>
               <span class="mat-name">${esc(s.name)}</span>
               <span class="mat-line">${esc(s.line)}</span>
-              <span class="mat-more">How it's done &amp; examples →</span>
+              <span class="mat-more">${s.brochure ? 'See designs &amp; how it works →' : 'How it\'s done &amp; examples →'}</span>
             </span>
           </button>`;
 }
@@ -124,6 +129,7 @@ function serviceDialog(s, up) {
       <div class="md-body">
         <p>${esc(s.desc)}</p>
         <ul class="md-facts">${s.facts.map((f) => `<li>${ICON.check}${esc(f)}</li>`).join('')}</ul>
+        ${s.brochure ? brochureBlock() : ''}
         <h3>How it's done</h3>
         <ol class="md-steps">${s.steps.map((t) => `<li>${esc(t)}</li>`).join('')}</ol>
         <h3>Examples</h3>
@@ -137,13 +143,29 @@ function serviceDialog(s, up) {
   </dialog>`;
 }
 
+// The brochure is a third party's: link to it rather than copy it, with a short guide so it's
+// one easy step (find a design, note its name or page, tell us) instead of a wall of options.
+function brochureBlock() {
+  return `<div class="brochure">
+          <h3>Choosing a design</h3>
+          <ol class="brochure-steps">
+            <li>Open the brochure and browse at your own pace.</li>
+            <li>Note the name, code or page number of any designs you like (one or several).</li>
+            <li>Put them in the enquiry form, or just tell us your idea. We'll help with the rest.</li>
+          </ol>
+          <a class="btn" href="${C.brochure}" target="_blank" rel="noopener">${ICON.book}Browse the design brochure</a>
+          <p class="muted small">Opens in a new tab. Designs can be changed to suit, and we make bespoke designs too.</p>
+        </div>`;
+}
+
 function page(r) {
   const up = r.path ? '../'.repeat(r.path.split('/').filter(Boolean).length) : '';
   const url = site.url + r.path;
   const hub = r.slug === 'scotland';
-  const areaName = esc(H1NAME[r.slug] || r.name);
-  const h1 = r.h1 || `Headstone restoration &amp; inscriptions in ${areaName}`;
-  const lede = r.lede ? esc(r.lede) : `Memorial cleaning, additional inscriptions and traditional lead lettering in cemeteries and kirkyards across ${r.towns.slice(0, 3).map(esc).join(', ')} and the rest of ${esc(r.name)}.`;
+  const h1 = r.h1 || `Headstone restoration &amp; inscriptions in ${esc(r.name)}`;
+  const lede = r.lede ? esc(r.lede) : `Memorial cleaning and restoration, additional inscriptions, lead lettering and new bespoke memorials in cemeteries and churchyards across ${r.towns.slice(1, 4).map(esc).join(', ')} and the rest of ${esc(r.name)}, from our base in ${esc(r.base)}.`;
+  const email = r.email || C.email;
+  const SIDES = regions;
   const work = workFor(r.slug);
   const revs = reviewsFor(r.slug);
   const ld = {
@@ -152,9 +174,10 @@ function page(r) {
     name: site.name, url,
     description: 'Monumental sculptor: memorial cleaning and restoration, additional inscriptions and traditional lead lettering.',
     image: site.url + r.hero, logo: site.url + 'img/logo-full.png',
-    telephone: C.tel, email: C.email,
-    address: { '@type': 'PostalAddress', postalCode: C.postcode, addressRegion: 'Perth and Kinross', addressCountry: 'GB' },
-    areaServed: hub ? { '@type': 'AdministrativeArea', name: 'Scotland' } : r.towns.map((t) => ({ '@type': 'City', name: t })),
+    telephone: C.tel, email,
+    address: hub ? SIDES.map((o) => ({ '@type': 'PostalAddress', addressLocality: o.base, addressCountry: 'GB' }))
+      : { '@type': 'PostalAddress', addressLocality: r.base, addressCountry: 'GB' },
+    areaServed: hub ? { '@type': 'AdministrativeArea', name: 'Central Scotland' } : r.towns.map((t) => ({ '@type': 'City', name: t })),
     sameAs: [C.facebook],
   };
   const waText = hub ? 'Hi, I\'d like a quote for some memorial work.' : `Hi, I'd like a quote for some memorial work in ${r.name}.`;
@@ -182,7 +205,7 @@ function page(r) {
   <link rel="stylesheet" href="${up}css/style.css">
   <script type="application/ld+json">${JSON.stringify(ld)}</script>
 </head>
-<body data-region="${r.slug}" data-root="${up}">
+<body data-region="${r.slug}" data-root="${up}" data-email="${email}">
   <a class="skip" href="#quote">Skip to the enquiry form</a>
   <header class="top">
     <div class="wrap">
@@ -214,13 +237,13 @@ function page(r) {
     <section class="hero" style="background-image:url('${up}${r.hero}')">
       <div class="wrap hero-grid">
         <div class="hero-copy">
-          <p class="eyebrow">Monumental sculptor · Based in ${C.base}</p>
+          <p class="eyebrow">Monumental sculptor · ${hub ? 'Cumbernauld &amp; Kinross' : `Based in ${esc(r.base)}`}</p>
           <h1>${h1}</h1>
           <p class="lede">${lede}</p>
           <ul class="ticks">
-            <li>${ICON.check}Cleaning and restoration of granite, marble and sandstone</li>
-            <li>${ICON.check}New names added to existing stones, lettering matched</li>
-            <li>${ICON.check}Traditional raised and flush lead lettering, by hand</li>
+            <li>${ICON.check}Cleaning and restoration of granite and marble memorials</li>
+            <li>${ICON.check}New names added on site, cut by hand or sandblasted</li>
+            <li>${ICON.check}New bespoke memorials, made to order</li>
           </ul>
           <div class="hero-actions">
             <a class="btn light" href="tel:${C.tel}">${ICON.phone}Call ${C.phone}</a>
@@ -238,11 +261,18 @@ function page(r) {
           </div>
           <div class="field"><label for="q-type">What would you like done?</label>
             <select id="q-type" name="service">
+              <option value="">Choose one…</option>
               ${SERVICES.map((s) => `<option value="${s.key}">${esc(s.name)}</option>`).join('')}
               <option value="not-sure">Not sure yet</option>
             </select>
           </div>
-          <div class="field"><label for="q-cemetery">Cemetery or churchyard, and town</label><input id="q-cemetery" name="cemetery" required placeholder="${hub ? 'e.g. Kinross West Cemetery' : `e.g. ${esc(r.towns[0])} Cemetery`}"></div>
+          <div class="field design-ref" hidden><label for="q-design">Designs you like <span class="opt">(optional)</span></label><input id="q-design" name="design" placeholder="Name, code or page from the brochure"></div>
+          <div class="field"><label for="q-cemetery">Cemetery or churchyard, and town</label><input id="q-cemetery" name="cemetery" required placeholder="e.g. ${esc((r.towns[0] || 'Kinross'))} Cemetery"></div>
+          ${hub ? `<div class="field"><label for="q-area">Which side of Scotland?</label>
+            <select id="q-area" name="area">
+              <option value="scotland">Not sure</option>
+              ${SIDES.map((o) => `<option value="${o.slug}">${esc(o.name)} (${esc(o.base)} team)</option>`).join('')}
+            </select></div>` : ''}
           <div class="field"><label for="q-msg">Anything else? <span class="opt">(optional)</span></label><textarea id="q-msg" name="message" rows="3" placeholder="Wording for a new inscription, the type of stone, when you'd like it done…"></textarea></div>
           <div class="field"><span class="label">Photos of the stone <span class="opt">(optional, up to 3)</span></span>
             <label class="photo-btn"><input type="file" id="q-photos" accept="image/*" multiple>${ICON.cam}<span>Add photos</span></label>
@@ -260,8 +290,27 @@ function page(r) {
       <div class="wrap strip-grid">
         <div><strong>Done by hand</strong><span>Traditional lead lettering &amp; letter cutting</span></div>
         <div><strong>On site</strong><span>Work carried out in the cemetery</span></div>
-        <div><strong>Any stone</strong><span>Granite, marble &amp; sandstone</span></div>
+        <div><strong>Two bases</strong><span>Cumbernauld &amp; Kinross</span></div>
         <div><strong>100% recommended</strong><span>by customers on Facebook</span></div>
+      </div>
+    </section>
+
+    <section id="restored">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Before &amp; after</p>
+          <h2>Memorials brought back to life</h2>
+          <p>Two of our recent restorations. Tap a photo to see it larger.</p>
+        </div>
+        <div class="ba-grid">
+          ${BEFORE_AFTER.map((b) => `<figure class="ba">
+            <div class="ba-pair">
+              <button type="button" class="ba-img" data-ba="${up}${b.before}" data-cap="Before: ${esc(b.caption)}"><img src="${up}${b.before}" alt="Before restoration: ${esc(b.alt)}" loading="lazy"><span class="ba-tag">Before</span></button>
+              <button type="button" class="ba-img" data-ba="${up}${b.after}" data-cap="After: ${esc(b.caption)}"><img src="${up}${b.after}" alt="After restoration: ${esc(b.alt)}" loading="lazy"><span class="ba-tag after">After</span></button>
+            </div>
+            <figcaption>${esc(b.caption)}</figcaption>
+          </figure>`).join('')}
+        </div>
       </div>
     </section>
 
@@ -282,7 +331,7 @@ function page(r) {
       <div class="wrap">
         <div class="section-head">
           <p class="eyebrow">What we do</p>
-          <h2>Caring for family memorials</h2>
+          <h2>New memorials and caring for old ones</h2>
           <p>Tap a service to see how it's done and examples of finished work.</p>
         </div>
         <div class="mat-grid">
@@ -314,7 +363,7 @@ function page(r) {
         </div>
         <div class="craft-photos">
           <img src="${up}img/hand-lettering.jpg" alt="Mark lettering a headstone by hand in a churchyard" loading="lazy" width="489" height="652">
-          <img src="${up}img/old-lettering-2.jpg" alt="Old hand-cut lettering on a weathered sandstone headstone" loading="lazy" width="489" height="652">
+          <img src="${up}img/mcmillan-after.jpg" alt="Restored granite family monument with its lettering renewed" loading="lazy" width="659" height="1225">
         </div>
       </div>
     </section>
@@ -347,23 +396,17 @@ function page(r) {
 
     <section class="alt" id="areas">
       <div class="wrap">
-        <div class="areas">
-          <div>
-            <p class="eyebrow">Areas we cover</p>
-            <h2>${esc(cap(r.name))}</h2>
-            <p>${esc(r.local)}</p>
-            ${hub ? '' : `<ul class="towns">${r.towns.map((t) => `<li>${esc(t)}</li>`).join('')}</ul>`}
-          </div>
-          ${hub ? `<div class="card all-areas">
-            <h3>Across Scotland</h3>
-            <ul>${regions.map((o) => isLive(o)
-              ? `<li><a href="${o.path}">${esc(cap(o.name))}</a> <small>${COUNTS[o.slug]} job${COUNTS[o.slug] === 1 ? '' : 's'}</small></li>`
-              : `<li><span>${esc(cap(o.name))}</span></li>`).join('')}</ul>
-          </div>` : `<div class="card all-areas">
-            <h3>Elsewhere</h3>
-            <ul><li><a href="${up}">All of Scotland</a></li>${LIVE.filter((o) => o.slug !== r.slug).map((o) => `<li><a href="${up}${o.path}">${esc(cap(o.name))}</a></li>`).join('')}</ul>
-          </div>`}
+        <div class="section-head"><p class="eyebrow">Where we work</p><h2>${hub ? 'Two bases across the central belt' : esc(r.name)}</h2><p>${esc(r.local)}</p></div>
+        <div class="sides">
+          ${SIDES.map((o) => `<div class="card side${o.slug === r.slug ? ' current' : ''}">
+            <p class="eyebrow">${esc(o.name)}</p>
+            <h3>${esc(o.base)} team</h3>
+            <ul class="towns">${o.towns.map((t) => `<li>${esc(t)}</li>`).join('')}</ul>
+            <p class="side-contact"><a href="tel:${C.tel}">${ICON.phone}${C.phone}</a><a href="mailto:${o.email}">${ICON.mail}${o.email}</a></p>
+            ${o.slug === r.slug ? '<p class="muted small">You\'re on this team\'s page.</p>' : `<a class="btn small ghost" href="${up}${o.path}">${esc(o.name)} page →</a>`}
+          </div>`).join('\n          ')}
         </div>
+        <p class="center muted">We also cover the islands and further afield. If you're not sure which team is nearest, send your enquiry anyway and we'll pass it on.</p>
       </div>
     </section>
 
@@ -383,10 +426,11 @@ function page(r) {
     <div class="wrap foot-grid">
       <div>
         <img class="foot-logo" src="${up}img/logo-full.png" alt="M. Wallace Memorials, monumental sculptor" width="239" height="151">
-        <p>Memorial restoration, additional inscriptions and lead lettering.<br>Based in ${C.base} (${C.postcode}), working across Scotland.</p>
+        <p>Memorial restoration, additional inscriptions, lead lettering and new memorials.<br>Bases in Cumbernauld and Kinross, covering the central belt of Scotland and the islands.</p>
       </div>
       <div>
-        <p><a href="tel:${C.tel}">${ICON.phone}${C.phone}</a><br><a href="mailto:${C.email}">${ICON.mail}${C.email}</a><br><a href="${WA('Hi, I\'d like a quote for some memorial work.')}" target="_blank" rel="noopener">${ICON.wa}WhatsApp</a></p>
+        <p><a href="tel:${C.tel}">${ICON.phone}${C.phone}</a><br><a href="${WA('Hi, I\'d like a quote for some memorial work.')}" target="_blank" rel="noopener">${ICON.wa}WhatsApp</a></p>
+        ${(hub ? SIDES : [r]).map((o) => `<p><strong>${esc(o.name)}</strong> (${esc(o.base)})<br><a href="mailto:${o.email}">${ICON.mail}${o.email}</a></p>`).join('')}
         <p class="social"><a href="${C.facebook}" aria-label="Facebook" rel="noopener" target="_blank">${ICON.fb}</a></p>
       </div>
     </div>
@@ -432,7 +476,7 @@ for (const [from, to] of Object.entries(redirects)) {
 
 // Region + service lists for the staff page and site (single source of truth)
 writeFileSync(join(root, 'js/regions.js'), `// Generated by tools/build.mjs from data/*.json. Don't edit by hand.
-export const REGIONS = ${JSON.stringify(Object.fromEntries([['scotland', 'Scotland'], ...regions.map((r) => [r.slug, cap(r.name)]), ['elsewhere', 'Elsewhere in the UK']]), null, 2)};
+export const REGIONS = ${JSON.stringify(Object.fromEntries([['scotland', 'Scotland'], ...regions.map((r) => [r.slug, cap(r.name)])]), null, 2)};
 export const TOWNS = ${JSON.stringify(Object.fromEntries(regions.map((r) => [r.slug, r.towns])))};
 export const SERVICES = ${JSON.stringify(SERVICES.map(({ key, name, keywords }) => ({ key, name, keywords })))};
 export const REVIEWS = ${JSON.stringify(REVIEWS)};

@@ -1,5 +1,5 @@
 {
-  "_note": "Customer recommendations from the M. Wallace Memorials Facebook page. Set \"region\" to an area slug (perth, fife, edinburgh, ...) once you know where the job was, and the review moves to the top of that area's page. Leave it null to show it everywhere.",
+  "_note": "Customer recommendations from the M. Wallace Memorials Facebook page. Set \"region\" to \"west\" or \"east\" once you know which team did the job, and the review moves to the top of that team's page. Leave it null to show it everywhere.",
   "source": "https://www.facebook.com/profile.php?id=61556696211749&sk=reviews",
   "reviews": [
     {

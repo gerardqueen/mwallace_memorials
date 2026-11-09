@@ -3,7 +3,13 @@
 //
 // Secrets (Supabase → Edge Functions → Secrets):
 //   RESEND_API_KEY  – already set if another site in this project uses Resend
-//   MW_ALERT_TO     – where M. Wallace enquiries go, e.g. mwallacememorials@gmail.com (required)
+//   MW_ALERT_TO       – fallback inbox for all enquiries (required)
+//   MW_ALERT_TO_WEST  – optional: West (Cumbernauld) team, e.g. mwallacememorials@live.co.uk
+//   MW_ALERT_TO_EAST  – optional: East (Kinross) team, e.g. mwallacememorials@gmail.com
+//   Enquiries from the West/East pages (or where the customer picked a side) go to that team;
+//   "not sure" goes to both. Until a team's address is set, its enquiries go to MW_ALERT_TO,
+//   labelled with the team they were meant for. (Resend's test sender only delivers to the
+//   Resend account owner, so set the team addresses once a domain is verified.)
 //   MW_ALERT_FROM   – optional, e.g. "M. Wallace Memorials <enquiries@yourdomain>" once a domain is verified
 //   MW_SITE_URL     – optional, for the link to the staff page
 // It deliberately never falls back to another site's ALERT_TO, so these can't go to the wrong business.
@@ -22,22 +28,20 @@ const json = (body: unknown, status = 200) =>
 const esc = (s: unknown) =>
   String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]!));
 const SERVICE: Record<string, string> = {
-  restoration: 'Cleaning & restoration', inscriptions: 'Additional inscription', lead: 'Lead lettering',
+  memorials: 'New bespoke memorial', restoration: 'Cleaning & restoration', inscriptions: 'Additional inscription', lead: 'Lead lettering',
   gilding: 'Gold leaf & painting', bespoke: 'Plaque / bespoke stone', 'not-sure': 'Not sure yet',
 };
 const REGION: Record<string, string> = {
-  scotland: 'All of Scotland', perth: 'Perth & Kinross', fife: 'Fife', edinburgh: 'Edinburgh & the Lothians',
-  dundee: 'Dundee & Angus', central: 'Stirling, Falkirk & Clackmannanshire', glasgow: 'Glasgow & Dunbartonshire',
-  lanarkshire: 'Lanarkshire', renfrewshire: 'Renfrewshire & Inverclyde', ayrshire: 'Ayrshire & Arran',
-  dumfries: 'Dumfries & Galloway', borders: 'Scottish Borders', aberdeen: 'Aberdeen & Aberdeenshire',
-  highlands: 'Highlands & Moray', argyll: 'Argyll & Bute',
+  scotland: 'Not sure which side', west: 'West Scotland (Cumbernauld team)', east: 'East Scotland (Kinross team)',
 };
+const list = (v?: string) => (v ?? '').split(',').map((s) => s.trim()).filter(Boolean);
 
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: CORS });
   const key = Deno.env.get('RESEND_API_KEY') ?? Deno.env.get('Resend_API_Key') ?? Deno.env.get('RESEND_API_key');
-  const to = (Deno.env.get('MW_ALERT_TO') ?? '').split(',').map((s) => s.trim()).filter(Boolean);
-  if (!key || !to.length) return json({ ok: false, reason: 'RESEND_API_KEY or MW_ALERT_TO not set yet' });
+  const fallback = list(Deno.env.get('MW_ALERT_TO'));
+  const TEAM: Record<string, string[]> = { west: list(Deno.env.get('MW_ALERT_TO_WEST')), east: list(Deno.env.get('MW_ALERT_TO_EAST')) };
+  if (!key || !fallback.length) return json({ ok: false, reason: 'RESEND_API_KEY or MW_ALERT_TO not set yet' });
 
   const from = Deno.env.get('MW_ALERT_FROM') ?? 'M. Wallace Memorials website <onboarding@resend.dev>';
   const site = Deno.env.get('MW_SITE_URL') ?? 'https://gerardqueen.github.io/mwallace_memorials/';
@@ -61,14 +65,17 @@ Deno.serve(async (req) => {
       links = (data ?? []).map((d) => d.signedUrl).filter(Boolean) as string[];
     }
     const what = SERVICE[e.service] ?? e.service ?? 'memorial work';
-    const subject = `Enquiry: ${what} – ${e.name}${e.cemetery ? ` (${e.cemetery})` : ''}`;
+    const teams = e.region === 'west' || e.region === 'east' ? [e.region] : ['west', 'east'];
+    const to = [...new Set(teams.flatMap((t) => TEAM[t].length ? TEAM[t] : fallback))];
+    const label = e.region === 'west' ? '[West] ' : e.region === 'east' ? '[East] ' : '[West/East?] ';
+    const subject = `${label}Enquiry: ${what} – ${e.name}${e.cemetery ? ` (${e.cemetery})` : ''}`;
     const rowsHtml = [
       ['Name', esc(e.name)],
       ['Phone', e.phone ? `<a href="tel:${esc(e.phone)}">${esc(e.phone)}</a>` : '—'],
       ['Email', `<a href="mailto:${esc(e.email)}">${esc(e.email)}</a>`],
       ['Wants', esc(what)],
       ['Where', esc(e.cemetery ?? '—')],
-      ['Page', esc(REGION[e.region] ?? e.region ?? '')],
+      ['Team', esc(REGION[e.region] ?? e.region ?? '')],
       ['Message', e.message ? esc(e.message).replace(/\n/g, '<br>') : '—'],
     ].map(([k, v]) => `<tr><td style="padding:6px 12px 6px 0;color:#666;vertical-align:top;white-space:nowrap">${k}</td><td style="padding:6px 0">${v}</td></tr>`).join('');
     const photosHtml = links.length
@@ -80,7 +87,7 @@ Deno.serve(async (req) => {
       <p style="margin-top:18px">Reply to this email to answer the customer directly, or
       <a href="${esc(site)}admin.html">open the staff page</a> to mark it done.</p></div>`;
     const text = `New enquiry from the website\n\nName: ${e.name}\nPhone: ${e.phone ?? '-'}\nEmail: ${e.email}\n` +
-      `Wants: ${what}\nWhere: ${e.cemetery ?? '-'}\nPage: ${REGION[e.region] ?? e.region ?? ''}\nMessage: ${e.message ?? '-'}\n` +
+      `Wants: ${what}\nWhere: ${e.cemetery ?? '-'}\nTeam: ${REGION[e.region] ?? e.region ?? ''}\nMessage: ${e.message ?? '-'}\n` +
       (links.length ? `\nPhotos (7 days):\n${links.join('\n')}\n` : '') + `\nStaff page: ${site}admin.html`;
 
     const res = await fetch('https://api.resend.com/emails', {

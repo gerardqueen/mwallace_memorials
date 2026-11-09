@@ -60,12 +60,10 @@ $$;
 -- ---------- Jobs (a finished job shown on a region page) ----------
 create table if not exists public.mw_jobs (
   id            uuid primary key default gen_random_uuid(),
-  region        text not null check (region in (
-                  'perth','fife','edinburgh','dundee','central','glasgow','lanarkshire','renfrewshire',
-                  'ayrshire','dumfries','borders','aberdeen','highlands','argyll','elsewhere')),
+  region        text not null check (region in ('west','east')),   -- West = Cumbernauld team, East = Kinross team
   town          text,
   cemetery      text,                                 -- e.g. "Blair Atholl churchyard"
-  service       text check (service in ('restoration','inscriptions','lead','gilding','bespoke')),
+  service       text check (service in ('memorials','restoration','inscriptions','lead','gilding','bespoke')),
   stone         text,                                 -- Granite, Marble, Sandstone, Slate, Other
   title         text,                                 -- optional; page uses the service name
   description   text,

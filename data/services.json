@@ -1,12 +1,40 @@
 [
   {
+    "key": "memorials",
+    "name": "New bespoke memorials",
+    "kind": "New memorials",
+    "line": "A new headstone or memorial, from a simple classic stone to a fully bespoke design.",
+    "card": null,
+    "head": "img/mcmillan-after.jpg",
+    "desc": "When you need a new memorial, we'll help you choose the shape, stone, wording and lettering. Browse our design brochure for ideas, or bring us a design of your own, and we'll make it to order. If you'd like another name added in years to come, the same team can do it in the cemetery.",
+    "facts": [
+      "Choose from our brochure or bring your own design",
+      "Granite and marble",
+      "Lettering cut by hand or sandblasted",
+      "Further names added later on site"
+    ],
+    "steps": [
+      "Have a look through the design brochure and note any designs you like, or send us your own idea.",
+      "We talk through the shape, stone, size, wording and lettering with you.",
+      "Your memorial is made to order.",
+      "We agree with you when and how it is put in place."
+    ],
+    "keywords": [
+      "new memorial",
+      "new headstone",
+      "bespoke memorial",
+      "design"
+    ],
+    "brochure": true
+  },
+  {
     "key": "restoration",
     "name": "Cleaning & restoration",
     "kind": "Restore",
     "line": "Weathered, green or blackened stones brought back so the letters can be read again.",
-    "card": "img/blair-atholl.jpg",
-    "head": "img/van-cemetery.jpg",
-    "desc": "Years of weather, lichen and moss leave a family stone dull and the inscription hard to read. We clean the whole memorial on site, then repaint or regild the lettering and replace any lead letters that have come away, so it looks as it did when it was first put up. We restore granite, marble (including Italian marble) and sandstone, from small headstones to large family monuments with carved crosses.",
+    "card": "img/mcmillan-after.jpg",
+    "head": "img/cocozza-after.jpg",
+    "desc": "Years of weather, lichen and moss leave a family stone dull and the inscription hard to read. We clean the whole memorial on site, then repaint or regild the lettering and replace any lead letters that have come away, so it looks as it did when it was first put up. We restore granite and marble memorials (including Italian marble), from small headstones to large family monuments with carved statues and crosses.",
     "facts": [
       "Full clean of the stone, base and any kerbs",
       "Lettering repainted after cleaning",
@@ -14,12 +42,17 @@
       "Plaques, statues and ornaments cleaned and reset"
     ],
     "steps": [
-      "We look at the stone first, because granite, marble and sandstone each need a different approach.",
+      "We look at the stone first, because granite and marble each need a different approach.",
       "The memorial is cleaned in the cemetery with our portable equipment.",
       "The inscription is repainted, regilded or re-leaded so it reads clearly again.",
       "If you'd like a new inscription added at the same time, it's done in the same visit."
     ],
-    "keywords": ["clean", "restor", "repaint", "renovat"]
+    "keywords": [
+      "clean",
+      "restor",
+      "repaint",
+      "renovat"
+    ]
   },
   {
     "key": "inscriptions",
@@ -28,9 +61,9 @@
     "line": "A new name added to an existing family stone, matched to the lettering already there.",
     "card": "img/hand-lettering.jpg",
     "head": "img/hand-lettering.jpg",
-    "desc": "When a family stone needs another name, the new lettering should look as if it was always there. We cut additional inscriptions by hand in the cemetery, matching the style, size and spacing of the existing letters, even on old stones where the original mason's font is long out of use, or the first inscription isn't quite on centre.",
+    "desc": "When a family stone needs another name, the new lettering should look as if it was always there. We add inscriptions in the cemetery, either cut by hand or sandblasted, matching the style, size and spacing of the existing letters, even on old stones where the original mason's font is long out of use, or the first inscription isn't quite on centre.",
     "facts": [
-      "Cut on site, so the stone stays where it is",
+      "Cut on site or by sandblasting, so the stone stays where it is",
       "Lettering matched to the existing inscription",
       "Finished in lead, paint or gold leaf to match",
       "Old or uneven stones laid out with care"
@@ -38,10 +71,15 @@
     "steps": [
       "Send us a photo of the stone and the wording you'd like.",
       "We draw the new inscription out to match the letters already on it.",
-      "The lettering is cut by hand on site.",
+      "The lettering is cut by hand on site or sandblasted.",
       "It's finished to match the rest of the stone: lead, paint or gold."
     ],
-    "keywords": ["inscription", "engrav", "name", "letter cut"]
+    "keywords": [
+      "inscription",
+      "engrav",
+      "name",
+      "letter cut"
+    ]
   },
   {
     "key": "lead",
@@ -63,7 +101,9 @@
       "Lead is beaten in and flattened to the right thickness, and the inscription is drawn back on.",
       "Each letter is cut round with chisels of different sizes, curving the rounds by hand."
     ],
-    "keywords": ["lead"]
+    "keywords": [
+      "lead"
+    ]
   },
   {
     "key": "gilding",
@@ -85,7 +125,12 @@
       "Gold leaf or paint is applied by hand, letter by letter.",
       "Border lines and details are finished with a steady hand."
     ],
-    "keywords": ["gild", "gold", "paint", "fillet"]
+    "keywords": [
+      "gild",
+      "gold",
+      "paint",
+      "fillet"
+    ]
   },
   {
     "key": "bespoke",
@@ -107,6 +152,13 @@
       "It's lettered by hand or sandblasted.",
       "Delivery or fitting is agreed with you when you order."
     ],
-    "keywords": ["plaque", "slate", "house", "boulder", "bespoke", "sandblast"]
+    "keywords": [
+      "plaque",
+      "slate",
+      "house",
+      "boulder",
+      "bespoke",
+      "sandblast"
+    ]
   }
 ]
