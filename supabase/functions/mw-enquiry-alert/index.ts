@@ -90,11 +90,22 @@ Deno.serve(async (req) => {
       `Wants: ${what}\nWhere: ${e.cemetery ?? '-'}\nTeam: ${REGION[e.region] ?? e.region ?? ''}\nMessage: ${e.message ?? '-'}\n` +
       (links.length ? `\nPhotos (7 days):\n${links.join('\n')}\n` : '') + `\nStaff page: ${site}admin.html`;
 
-    const res = await fetch('https://api.resend.com/emails', {
+    const send = (rcpt: string[], subj: string, h: string, t: string) => fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ from, to, reply_to: e.email, subject, html, text }),
+      body: JSON.stringify({ from, to: rcpt, reply_to: e.email, subject: subj, html: h, text: t }),
     });
+    let res = await send(to, subject, html, text);
+    // Safety net: if Resend refuses the team address (e.g. no verified sending domain yet),
+    // the enquiry still reaches the fallback inbox, flagged, instead of being lost.
+    const isFallback = to.length === fallback.length && to.every((x) => fallback.includes(x));
+    if (!res.ok && !isFallback && res.status < 500) {
+      const why = `${res.status} ${(await res.text()).slice(0, 300)}`;
+      const note = `NOT DELIVERED to ${to.join(', ')} (Resend said: ${why}). Please forward to the team.`;
+      res = await send(fallback, `[Not delivered to team] ${subject}`,
+        `<p style="font-family:Arial,sans-serif;background:#fff4d6;border:1px solid #e6c65c;padding:10px 12px;border-radius:4px">${esc(note)}</p>${html}`,
+        `${note}\n\n${text}`);
+    }
     if (res.ok) sent.push(e.id);
     else {
       failed.push(`${e.id}: ${res.status} ${await res.text()}`);

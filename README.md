@@ -47,7 +47,9 @@ Both team pages are always live. The **Build region pages** action rebuilds ever
 
 ## Email routing
 
-`mw-enquiry-alert` sends West enquiries to `MW_ALERT_TO_WEST`, East to `MW_ALERT_TO_EAST`, and "not sure" to both. Until those secrets are set, everything goes to `MW_ALERT_TO` with `[West]`/`[East]` in the subject. Resend's test sender only delivers to the Resend account owner, so verify a domain in Resend, set `MW_ALERT_FROM`, then add the two team addresses.
+`mw-enquiry-alert` sends West enquiries to `MW_ALERT_TO_WEST` (mwallacememorials@live.co.uk), East to `MW_ALERT_TO_EAST` (mwallacememorials@gmail.com), and "not sure" to both. Both secrets are set.
+
+Resend only delivers to those addresses once a sending domain is verified in Resend and `MW_ALERT_FROM` is set to an address on it (e.g. `M. Wallace Memorials <enquiries@mwallacememorials.co.uk>`). Until then Resend refuses them, and the function sends the enquiry to `MW_ALERT_TO` instead, with "[Not delivered to team]" in the subject, so nothing is lost. Once the domain is verified and `MW_ALERT_FROM` is set, team delivery starts with no code change.
 
 ## Going live on a domain
 
