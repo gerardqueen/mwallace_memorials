@@ -226,7 +226,27 @@ async function openAR() {
       try { await loadScript(QR_LIB); const q = window.qrcode(0, 'L'); q.addData(shareUrl('&ar=1')); q.make(); $('.qr', foot).innerHTML = q.createSvgTag({ cellSize: 3, margin: 2, scalable: true }); }
       catch { $('.qr', foot).remove(); }
     };
-    mv.addEventListener('load', () => (mv.canActivateAR ? phone() : desktop()), { once: true });
+    // Phones that can't start AR here are almost always inside an app's built-in browser
+    // (Claude, WhatsApp, Facebook, Messenger…). AR Quick Look only runs in Safari, so send them there.
+    const IOS = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    const ANDROID = /Android/i.test(navigator.userAgent);
+    const inApp = () => {
+      const url = shareUrl('&ar=1');
+      const open = IOS ? `x-safari-${url}` : `intent://${url.replace(/^https?:\/\//, '')}#Intent;scheme=https;package=com.android.chrome;end`;
+      foot.innerHTML = `<div class="ar-inapp">
+        <strong>To place it on the ground, open this page in ${IOS ? 'Safari' : 'Chrome'}</strong>
+        <p class="muted">You're viewing this inside another app's browser, which can't use the camera for AR.</p>
+        <div class="d-actions"><a class="btn" href="${esc(open)}">Open in ${IOS ? 'Safari' : 'Chrome'}</a>
+        <button class="btn ghost" type="button" id="ar-copy">Copy link</button></div>
+        <p class="muted small" id="ar-copied">If the button doesn't work, copy the link and paste it into ${IOS ? 'Safari' : 'Chrome'}. Your design comes with it.</p>
+        ${IOS ? `<p class="muted small"><a rel="ar" href="${urls.usdzUrl}"><img alt="" width="1" height="1" style="opacity:0">Or try opening it in AR directly</a></p>` : ''}
+      </div>`;
+      $('#ar-copy', foot).onclick = async () => {
+        try { await navigator.clipboard.writeText(url); $('#ar-copied', foot).textContent = 'Link copied. Paste it into ' + (IOS ? 'Safari' : 'Chrome') + '.'; }
+        catch { $('#ar-copied', foot).textContent = url; }
+      };
+    };
+    mv.addEventListener('load', () => (mv.canActivateAR ? phone() : (IOS || ANDROID) ? inApp() : desktop()), { once: true });
     mv.addEventListener('ar-status', (e) => { if (e.detail.status === 'failed') foot.insertAdjacentHTML('afterbegin', '<p class="error">Your phone couldn\'t start AR here. Try Safari on iPhone or Chrome on Android.</p>'); });
   } catch (e) {
     console.error(e);

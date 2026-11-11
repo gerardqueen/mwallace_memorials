@@ -578,3 +578,6 @@ legend { text-transform: uppercase; font-size: 12px; letter-spacing: .1em; font-
 .dz-form .actions { display: flex; gap: 10px; }
 .dz-prev { width: 90px; height: 90px; object-fit: cover; border-radius: var(--r); margin-top: 6px; }
 .dz-sw { display: block; width: 64px; height: 64px; border-radius: var(--r); background: var(--mist); }
+.ar-inapp { display: grid; gap: 8px; }
+.ar-inapp p { margin: 0; }
+@media (max-width: 700px) { .ar-stage { height: 38vh; } .d-dialog-inner { padding: 20px 16px; } .d-dialog h2 { font-size: 26px; } }
