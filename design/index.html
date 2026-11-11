@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Design a memorial | M. Wallace Memorials</title>
+  <meta name="description" content="Design a headstone online: choose the shape, stone, base and lettering, see it in 3D and in place on your phone, then send it to us for a quote.">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#292929">
+  <link rel="icon" href="../img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Great+Vibes&family=Montserrat:wght@600&family=Source+Sans+3:wght@300;400;600&display=swap">
+  <link rel="stylesheet" href="../css/style.css">
+  <script type="importmap">
+    {"imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.172.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.172.0/examples/jsm/"
+    }}
+  </script>
+</head>
+<body class="designer-page" data-region="scotland" data-root="../">
+  <header class="top">
+    <div class="wrap">
+      <a class="brand" href="../" aria-label="M. Wallace Memorials home">
+        <img src="../img/monogram.png" alt="" width="97" height="40">
+        <span><strong>M. Wallace Memorials</strong><small>Design a memorial</small></span>
+      </a>
+      <nav class="top-nav" aria-label="Page"><a href="../">← Back to the site</a></nav>
+      <div class="top-cta">
+        <a class="top-phone" href="tel:+447827665296"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg><span>07827 665296</span></a>
+      </div>
+    </div>
+  </header>
+
+  <main class="designer">
+    <div class="d-stage">
+      <div class="d-canvas" id="d-canvas" aria-label="3D preview of your memorial. Drag to turn it, pinch or scroll to zoom."></div>
+      <div class="d-loading" id="d-loading">Loading the 3D preview…</div>
+      <div class="d-toolbar">
+        <button class="btn small light" type="button" id="d-ar">See it in place</button>
+        <button class="btn small ghost-light" type="button" id="d-send">Send for a quote</button>
+      </div>
+      <p class="d-hint">Drag to turn · pinch or scroll to zoom</p>
+    </div>
+
+    <div class="d-panel">
+      <div class="d-intro">
+        <p class="eyebrow">Preview · Design a memorial</p>
+        <h1>Design your memorial</h1>
+        <p class="muted">Pick a design to start from, then change anything you like. It's only a guide: we'll go through every detail with you before anything is made.</p>
+      </div>
+
+      <details class="d-step" open data-step="start">
+        <summary><span>1</span>Start from a design</summary>
+        <div class="d-body">
+          <div class="d-presets" id="d-presets"></div>
+          <p class="muted small">Seen something in our <a href="https://cjimports.com/b/mrzqm6h8" target="_blank" rel="noopener">design brochure</a>? Pick the closest shape below and put the brochure code in your message.</p>
+        </div>
+      </details>
+
+      <details class="d-step" data-step="shape">
+        <summary><span>2</span>Shape &amp; size</summary>
+        <div class="d-body">
+          <div class="d-shapes" id="d-shapes"></div>
+          <div class="d-chips" id="d-sizes"></div>
+          <div class="d-sliders">
+            <label>Width <output id="o-w"></output><input type="range" id="d-w" min="450" max="1100" step="5"></label>
+            <label>Height <output id="o-h"></output><input type="range" id="d-h" min="450" max="1300" step="5"></label>
+            <label>Thickness <output id="o-t"></output><input type="range" id="d-t" min="50" max="150" step="5"></label>
+          </div>
+        </div>
+      </details>
+
+      <details class="d-step" data-step="stone">
+        <summary><span>3</span>Stone</summary>
+        <div class="d-body"><div class="d-stones" id="d-stones"></div></div>
+      </details>
+
+      <details class="d-step" data-step="base">
+        <summary><span>4</span>Base, vases &amp; kerbs</summary>
+        <div class="d-body">
+          <label class="d-toggle"><input type="checkbox" id="d-base"> Base under the headstone</label>
+          <div class="d-sub" id="d-base-opts">
+            <label class="d-slider">Base height <output id="o-bh"></output><input type="range" id="d-bh" min="75" max="300" step="5"></label>
+            <div class="d-chips" id="d-vases"></div>
+          </div>
+          <label class="d-toggle"><input type="checkbox" id="d-kerbs"> Kerb set (full surround)</label>
+          <div class="d-sub" id="d-kerb-opts"><div class="d-chips" id="d-chipsel"></div></div>
+        </div>
+      </details>
+
+      <details class="d-step" data-step="letters">
+        <summary><span>5</span>Lettering &amp; motif</summary>
+        <div class="d-body">
+          <div class="field"><label for="t-top">Opening line</label><input id="t-top" data-text="top" placeholder="In loving memory of"></div>
+          <div class="field"><label for="t-name">Name</label><input id="t-name" data-text="name"></div>
+          <div class="field"><label for="t-dates">Dates</label><input id="t-dates" data-text="dates" placeholder="e.g. 12th March 1941 – 4th June 2025"></div>
+          <div class="field"><label for="t-more">Further lines <span class="opt">(optional, one per line)</span></label><textarea id="t-more" data-text="more" rows="3" placeholder="e.g. Also his wife&#10;Jean"></textarea></div>
+          <div class="field"><label for="t-epi">Closing words <span class="opt">(optional)</span></label><input id="t-epi" data-text="epitaph" placeholder="e.g. Forever in our hearts"></div>
+          <p class="label">Lettering style</p><div class="d-chips" id="d-fonts"></div>
+          <p class="label">Lettering finish</p><div class="d-chips" id="d-colours"></div>
+          <p class="label">Motif</p><div class="d-chips" id="d-motifs"></div>
+        </div>
+      </details>
+
+      <details class="d-step" data-step="done">
+        <summary><span>6</span>See it &amp; send it</summary>
+        <div class="d-body">
+          <p id="d-summary" class="d-summary"></p>
+          <div class="d-actions">
+            <button class="btn" type="button" data-act="ar">See it in place</button>
+            <button class="btn" type="button" data-act="send">Send for a quote</button>
+            <button class="btn ghost" type="button" data-act="copy">Copy link to this design</button>
+          </div>
+          <p class="muted small" id="d-copied" role="status"></p>
+        </div>
+      </details>
+    </div>
+  </main>
+
+  <dialog class="d-dialog" id="ar-dialog" aria-labelledby="ar-title">
+    <div class="d-dialog-inner">
+      <button class="md-close" type="button" data-close aria-label="Close">×</button>
+      <p class="eyebrow">Preview · See it in place</p>
+      <h2 id="ar-title">Your memorial, at true size</h2>
+      <div class="ar-stage" id="ar-stage"></div>
+      <div class="ar-foot" id="ar-foot"></div>
+    </div>
+  </dialog>
+
+  <dialog class="d-dialog" id="send-dialog" aria-labelledby="send-title">
+    <form class="d-dialog-inner quote" id="send-form" novalidate>
+      <button class="md-close" type="button" data-close aria-label="Close">×</button>
+      <h2 id="send-title">Send this design for a quote</h2>
+      <p class="muted">We'll get back to you with a price and talk through the details. A picture of your design and a link to it come with your enquiry.</p>
+      <img class="send-snap" id="send-snap" alt="Your design">
+      <div class="field"><label for="s-name">Your name</label><input id="s-name" name="name" autocomplete="name" required></div>
+      <div class="row2">
+        <div class="field"><label for="s-phone">Phone</label><input id="s-phone" name="phone" type="tel" autocomplete="tel" required></div>
+        <div class="field"><label for="s-email">Email</label><input id="s-email" name="email" type="email" autocomplete="email" required></div>
+      </div>
+      <div class="field"><label for="s-cem">Cemetery or churchyard, and town</label><input id="s-cem" name="cemetery" required></div>
+      <div class="field"><label for="s-area">Which side of Scotland?</label>
+        <select id="s-area" name="area"><option value="scotland">Not sure</option><option value="west">West Scotland (Cumbernauld team)</option><option value="east">East Scotland (Kinross team)</option></select></div>
+      <div class="field"><label for="s-msg">Anything else? <span class="opt">(optional)</span></label><textarea id="s-msg" name="message" rows="3" placeholder="Brochure codes, changes you'd like, when you need it…"></textarea></div>
+      <div class="hp" aria-hidden="true"><label>Leave blank <input name="company" tabindex="-1" autocomplete="off"></label></div>
+      <button class="btn block" type="submit">Send my design</button>
+      <p class="fine">We'll only use your details to reply about this enquiry. <a href="../privacy.html">Privacy</a></p>
+      <div class="form-msg" role="status" aria-live="polite"></div>
+    </form>
+  </dialog>
+
+  <script type="module" src="../js/designer.js"></script>
+</body>
+</html>

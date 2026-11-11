@@ -2,6 +2,7 @@
 import { SUPABASE_URL, SUPABASE_ANON_KEY } from './config.js';
 import { REGIONS, TOWNS, SERVICES } from './regions.js';
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/+esm';
+import { decodeDesign, encodeDesign, describe, DEFAULT_STONES } from './memorial3d.js';
 
 const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { storageKey: 'mw-staff-auth' } });
 const $ = (s, el = document) => el.querySelector(s);
@@ -159,6 +160,7 @@ async function refresh() {
     sb.from('mw_enquiries').select('*').order('created_at', { ascending: false }).limit(300).then(must),
   ]).catch((e) => { $('#j-error').textContent = /schema cache|does not exist/.test(e.message) ? SETUP_MSG : 'Could not load: ' + e.message; $('#j-error').hidden = false; return [[], []]; });
   drawJobs(); drawEnq(); drawStaff();
+  drawDesigner();
 }
 $('#jobs-filter').onchange = drawJobs;
 const jobTitle = (j) => j.title || SERVICE_NAME[j.service] || 'Memorial work';
@@ -251,3 +253,84 @@ $('[data-pane="staff"]').onclick = async (e) => {
 };
 
 boot();
+
+// ---------------- Designer catalogue (stones + starting designs) ----------------
+async function uploadDesignerPhoto(file) {
+  const blob = await compress(file, 1600, 0.85);
+  const path = `designer/${uid()}.jpg`;
+  must(await sb.storage.from('mw-job-photos').upload(path, blob, { contentType: 'image/jpeg', cacheControl: '31536000' }));
+  return sb.storage.from('mw-job-photos').getPublicUrl(path).data.publicUrl;
+}
+let STONES_DB = [], PRESETS_DB = [];
+const DZ_SETUP = 'The designer catalogue isn\'t set up yet: run supabase/003_designer.sql in the Supabase SQL editor.';
+async function drawDesigner() {
+  const load = (t) => sb.from(t).select('*').order('sort').order('created_at', { ascending: false }).then(must);
+  try { [STONES_DB, PRESETS_DB] = await Promise.all([load('mw_design_stones'), load('mw_design_presets')]); }
+  catch (e) { $('#stone-list').innerHTML = `<p class="muted">${/schema cache|does not exist/.test(e.message) ? DZ_SETUP : esc(e.message)}</p>`; return; }
+  $('#stone-list').innerHTML = STONES_DB.length ? STONES_DB.map((x) => `<div class="row-item ${x.active ? '' : 'off'}">
+      ${x.photo_url ? `<img src="${esc(x.photo_url)}" alt="">` : `<span class="dz-sw" style="background:${esc(x.colour)}"></span>`}
+      <div><h3>${esc(x.name)}</h3><p class="muted">${x.kind === 'marble' ? 'Marble' : 'Granite'}${x.active ? '' : ' · hidden'}</p></div>
+      <div class="actions"><button class="btn small ghost" data-st-edit="${x.id}">Edit</button><button class="btn small ghost" data-st-del="${x.id}">Delete</button></div></div>`).join('')
+    : `<p class="muted">No stones added yet. The designer shows its ${DEFAULT_STONES.length} built-in stones.</p>`;
+  $('#preset-list').innerHTML = PRESETS_DB.length ? PRESETS_DB.map((x) => `<div class="row-item ${x.active ? '' : 'off'}">
+      ${x.photo_url ? `<img src="${esc(x.photo_url)}" alt="">` : '<span class="dz-sw"></span>'}
+      <div><h3>${esc(x.name)}${x.brochure_ref ? ` <small class="muted">· ${esc(x.brochure_ref)}</small>` : ''}</h3><p class="muted">${esc(describe(x.design, [...STONES_DB, ...DEFAULT_STONES]))}</p></div>
+      <div class="actions"><a class="btn small ghost" href="design/?d=${encodeDesign(x.design)}" target="_blank" rel="noopener">Open</a>
+      <button class="btn small ghost" data-pr-edit="${x.id}">Edit</button><button class="btn small ghost" data-pr-del="${x.id}">Delete</button></div></div>`).join('')
+    : '<p class="muted">No starting designs added yet. The designer shows its six built-in ones.</p>';
+}
+
+let stPhoto = null, prPhoto = null;
+const previewPick = (input, img, set) => { $(input).onchange = (e) => { const f = e.target.files[0]; if (!f) return; set(f); const i = $(img); i.src = URL.createObjectURL(f); i.hidden = false; }; };
+previewPick('#st-photo', '#st-preview', (f) => (stPhoto = f));
+previewPick('#pr-photo', '#pr-preview', (f) => (prPhoto = f));
+function resetStone() { $('#stone-form').reset(); $('#st-id').value = ''; stPhoto = null; $('#st-preview').hidden = true; $('#st-cancel').hidden = true; $('#st-save').textContent = 'Save stone'; $('#st-error').hidden = true; }
+function resetPreset() { $('#preset-form').reset(); $('#pr-id').value = ''; prPhoto = null; $('#pr-preview').hidden = true; $('#pr-cancel').hidden = true; $('#pr-save').textContent = 'Save design'; $('#pr-error').hidden = true; }
+$('#st-cancel').onclick = resetStone; $('#pr-cancel').onclick = resetPreset;
+
+$('#stone-form').onsubmit = async (e) => {
+  e.preventDefault(); const err = $('#st-error'); err.hidden = true; const btn = $('#st-save'); btn.disabled = true;
+  try {
+    const id = $('#st-id').value, old = STONES_DB.find((x) => x.id === id);
+    const row = { name: $('#st-name').value.trim(), kind: $('#st-kind').value, colour: $('#st-colour').value, sort: +$('#st-sort').value || 10, active: $('#st-active').checked,
+      photo_url: stPhoto ? await uploadDesignerPhoto(stPhoto) : old?.photo_url || null };
+    if (!row.name) throw new Error('Give the stone a name.');
+    if (id) must(await sb.from('mw_design_stones').update(row).eq('id', id)); else must(await sb.from('mw_design_stones').insert(row));
+    resetStone(); drawDesigner();
+  } catch (ex) { err.textContent = ex.message; err.hidden = false; } finally { btn.disabled = false; }
+};
+$('#preset-form').onsubmit = async (e) => {
+  e.preventDefault(); const err = $('#pr-error'); err.hidden = true; const btn = $('#pr-save'); btn.disabled = true;
+  try {
+    const id = $('#pr-id').value, old = PRESETS_DB.find((x) => x.id === id);
+    let code = $('#pr-link').value.trim(); try { code = new URL(code).searchParams.get('d') || code; } catch {}
+    const design = decodeDesign(code);
+    if (!design) throw new Error('That link doesn\'t contain a design. In the designer, use "Copy link to this design" and paste it here.');
+    const row = { name: $('#pr-name').value.trim(), brochure_ref: $('#pr-ref').value.trim() || null, design, sort: +$('#pr-sort').value || 10, active: $('#pr-active').checked,
+      photo_url: prPhoto ? await uploadDesignerPhoto(prPhoto) : old?.photo_url || null };
+    if (!row.name) throw new Error('Give the design a name.');
+    if (id) must(await sb.from('mw_design_presets').update(row).eq('id', id)); else must(await sb.from('mw_design_presets').insert(row));
+    resetPreset(); drawDesigner();
+  } catch (ex) { err.textContent = ex.message; err.hidden = false; } finally { btn.disabled = false; }
+};
+$('[data-pane="designer"]').addEventListener('click', async (e) => {
+  const d = e.target.dataset;
+  if (d.stEdit) {
+    const x = STONES_DB.find((s) => s.id === d.stEdit); resetStone();
+    $('#st-id').value = x.id; $('#st-name').value = x.name; $('#st-kind').value = x.kind; $('#st-colour').value = x.colour || '#333333'; $('#st-sort').value = x.sort; $('#st-active').checked = x.active;
+    if (x.photo_url) { $('#st-preview').src = x.photo_url; $('#st-preview').hidden = false; }
+    $('#st-cancel').hidden = false; $('#st-save').textContent = 'Update stone'; $('#stone-form').scrollIntoView({ behavior: 'smooth' });
+  }
+  if (d.prEdit) {
+    const x = PRESETS_DB.find((s) => s.id === d.prEdit); resetPreset();
+    $('#pr-id').value = x.id; $('#pr-name').value = x.name; $('#pr-ref').value = x.brochure_ref || ''; $('#pr-sort').value = x.sort; $('#pr-active').checked = x.active;
+    $('#pr-link').value = `${location.origin}${location.pathname.replace(/admin\.html$/, '')}design/?d=${encodeDesign(x.design)}`;
+    if (x.photo_url) { $('#pr-preview').src = x.photo_url; $('#pr-preview').hidden = false; }
+    $('#pr-cancel').hidden = false; $('#pr-save').textContent = 'Update design'; $('#preset-form').scrollIntoView({ behavior: 'smooth' });
+  }
+  for (const [k, t] of [['stDel', 'mw_design_stones'], ['prDel', 'mw_design_presets']]) {
+    if (!d[k]) continue;
+    if (d.sure !== '1') { d.sure = '1'; e.target.textContent = 'Tap again to delete'; return; }
+    must(await sb.from(t).delete().eq('id', d[k])); drawDesigner();
+  }
+});

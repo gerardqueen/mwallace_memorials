@@ -129,7 +129,7 @@ function serviceDialog(s, up) {
       <div class="md-body">
         <p>${esc(s.desc)}</p>
         <ul class="md-facts">${s.facts.map((f) => `<li>${ICON.check}${esc(f)}</li>`).join('')}</ul>
-        ${s.brochure ? brochureBlock() : ''}
+        ${s.brochure ? brochureBlock(up) : ''}
         <h3>How it's done</h3>
         <ol class="md-steps">${s.steps.map((t) => `<li>${esc(t)}</li>`).join('')}</ol>
         <h3>Examples</h3>
@@ -145,8 +145,12 @@ function serviceDialog(s, up) {
 
 // The brochure is a third party's: link to it rather than copy it, with a short guide so it's
 // one easy step (find a design, note its name or page, tell us) instead of a wall of options.
-function brochureBlock() {
-  return `<div class="brochure">
+function brochureBlock(up = '') {
+  return `${site.designer ? `<div class="brochure designer-cta">
+          <h3>Design it online</h3>
+          <p class="muted small" style="margin:0 0 12px">Choose a shape, stone and lettering, see it in 3D, and place it at true size on your phone before you send it to us.</p>
+          <a class="btn" href="${up}design/">Open the memorial designer</a>
+        </div>` : ''}<div class="brochure">
           <h3>Choosing a design</h3>
           <ol class="brochure-steps">
             <li>Open the brochure and browse at your own pace.</li>
@@ -217,6 +221,7 @@ function page(r) {
         <a href="#services">Services</a>
         <a href="#work" data-work-link${work.main.length ? '' : ' hidden'}>Our work</a>
         <a href="#craft">The craft</a>
+        ${site.designer ? `<a href="${up}design/">Design online</a>` : ''}
         <a href="#reviews">Reviews</a>
         <details class="nav-areas">
           <summary>Areas</summary>

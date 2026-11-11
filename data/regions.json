@@ -3,7 +3,8 @@
     "url": "https://gerardqueen.github.io/mwallace_memorials/",
     "noindex": true,
     "name": "M. Wallace Memorials",
-    "activateAt": 0
+    "activateAt": 0,
+    "designer": false
   },
   "hub": {
     "slug": "scotland",
@@ -26,7 +27,25 @@
       "email": "mwallacememorials@live.co.uk",
       "title": "Headstone Restoration & Inscriptions in West Scotland | M. Wallace Memorials",
       "description": "Headstone cleaning and restoration, additional inscriptions, lead lettering and new bespoke memorials across Glasgow, Lanarkshire, Stirling, Falkirk, Ayrshire and the islands. Based in Cumbernauld. Free quotes.",
-      "towns": ["Cumbernauld", "Kilsyth", "Kirkintilloch", "Glasgow", "Airdrie", "Coatbridge", "Motherwell", "Hamilton", "East Kilbride", "Paisley", "Dumbarton", "Helensburgh", "Falkirk", "Stirling", "Ayr", "Kilmarnock", "Rothesay"],
+      "towns": [
+        "Cumbernauld",
+        "Kilsyth",
+        "Kirkintilloch",
+        "Glasgow",
+        "Airdrie",
+        "Coatbridge",
+        "Motherwell",
+        "Hamilton",
+        "East Kilbride",
+        "Paisley",
+        "Dumbarton",
+        "Helensburgh",
+        "Falkirk",
+        "Stirling",
+        "Ayr",
+        "Kilmarnock",
+        "Rothesay"
+      ],
       "local": "Our west team is based in Cumbernauld, right in the middle of the central belt, so Glasgow, Lanarkshire, Falkirk and Stirling are all close by. We also cover Ayrshire, Dunbartonshire, Renfrewshire and the islands, and we're happy to take the ferry: we've taken the van over to Rothesay on Bute for jobs.",
       "hero": "img/van-cemetery.jpg"
     },
@@ -38,7 +57,24 @@
       "email": "mwallacememorials@gmail.com",
       "title": "Headstone Restoration & Inscriptions in East Scotland | M. Wallace Memorials",
       "description": "Headstone cleaning and restoration, additional inscriptions, lead lettering and new bespoke memorials across Perth & Kinross, Fife, Edinburgh, the Lothians and Dundee. Based in Kinross. Free quotes.",
-      "towns": ["Kinross", "Milnathort", "Perth", "Crieff", "Pitlochry", "Blair Atholl", "Dunfermline", "Kirkcaldy", "Glenrothes", "St Andrews", "Alloa", "Edinburgh", "Livingston", "Musselburgh", "Dundee", "Arbroath"],
+      "towns": [
+        "Kinross",
+        "Milnathort",
+        "Perth",
+        "Crieff",
+        "Pitlochry",
+        "Blair Atholl",
+        "Dunfermline",
+        "Kirkcaldy",
+        "Glenrothes",
+        "St Andrews",
+        "Alloa",
+        "Edinburgh",
+        "Livingston",
+        "Musselburgh",
+        "Dundee",
+        "Arbroath"
+      ],
       "local": "Our east team is based in Kinross, so Perth & Kinross, Fife, Clackmannanshire, Edinburgh and the Lothians, and Dundee and Angus are all within easy reach. Recent jobs have taken us to a churchyard in Fife, a family stone in Edinburgh and up to Blair Atholl churchyard in Highland Perthshire.",
       "hero": "img/blair-atholl.jpg"
     }

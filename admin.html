@@ -52,6 +52,7 @@
           <button data-tab="jobs">Jobs</button>
           <button data-tab="enq">Enquiries <span class="badge" id="enq-badge"></span></button>
           <button data-tab="staff">Staff <span class="badge" id="staff-badge"></span></button>
+          <button data-tab="designer">Designer</button>
         </div>
 
         <!-- Add / edit job -->
@@ -119,6 +120,48 @@
           <div class="list" id="req-list"></div>
           <h3 style="margin-top:28px">Admins</h3>
           <div class="list" id="admin-list"></div>
+        </section>
+
+        <section data-pane="designer" hidden style="padding:0">
+          <p class="muted">What customers can pick in the online designer (<a href="design/" target="_blank" rel="noopener">open it</a>). Built-in stones and starting designs are always there; anything you add here appears first.</p>
+          <h3>Stones</h3>
+          <form class="card dz-form" id="stone-form">
+            <input type="hidden" id="st-id">
+            <div class="row2">
+              <div class="field"><label for="st-name">Name</label><input id="st-name" required placeholder="e.g. Indian Aurora granite"></div>
+              <div class="field"><label for="st-kind">Type</label><select id="st-kind"><option value="granite">Granite (speckled)</option><option value="marble">Marble (veined)</option></select></div>
+            </div>
+            <div class="row2">
+              <div class="field"><label for="st-colour">Main colour <span class="opt">(used if there's no photo)</span></label><input id="st-colour" type="color" value="#333333"></div>
+              <div class="field"><span class="label">Photo of the polished surface <span class="opt">(close-up, straight on)</span></span>
+                <label class="photo-btn"><input type="file" id="st-photo" accept="image/*"><span>Choose photo</span></label><img id="st-preview" class="dz-prev" alt="" hidden></div>
+            </div>
+            <div class="row2"><div class="field"><label for="st-sort">Order <span class="opt">(lower first)</span></label><input id="st-sort" type="number" value="10"></div>
+              <label class="d-toggle" style="align-self:end"><input type="checkbox" id="st-active" checked> Show to customers</label></div>
+            <div class="actions"><button class="btn" type="submit" id="st-save">Save stone</button><button class="btn ghost" type="button" id="st-cancel" hidden>Cancel</button></div>
+            <p class="form-msg err" id="st-error" hidden></p>
+          </form>
+          <div class="list" id="stone-list"></div>
+
+          <h3 style="margin-top:28px">Starting designs (catalogue)</h3>
+          <p class="muted">Build the design in the <a href="design/" target="_blank" rel="noopener">designer</a>, tap <em>Copy link to this design</em>, and paste the link here. Add the brochure code so customers can match it up.</p>
+          <form class="card dz-form" id="preset-form">
+            <input type="hidden" id="pr-id">
+            <div class="row2">
+              <div class="field"><label for="pr-name">Name</label><input id="pr-name" required placeholder="e.g. Ogee with gold lettering"></div>
+              <div class="field"><label for="pr-ref">Brochure code or page <span class="opt">(optional)</span></label><input id="pr-ref"></div>
+            </div>
+            <div class="field"><label for="pr-link">Designer link</label><input id="pr-link" required placeholder="https://…/design/?d=…"></div>
+            <div class="row2">
+              <div class="field"><span class="label">Photo <span class="opt">(optional: a real example; otherwise a drawing is shown)</span></span>
+                <label class="photo-btn"><input type="file" id="pr-photo" accept="image/*"><span>Choose photo</span></label><img id="pr-preview" class="dz-prev" alt="" hidden></div>
+              <div class="field"><label for="pr-sort">Order <span class="opt">(lower first)</span></label><input id="pr-sort" type="number" value="10">
+                <label class="d-toggle" style="margin-top:12px"><input type="checkbox" id="pr-active" checked> Show to customers</label></div>
+            </div>
+            <div class="actions"><button class="btn" type="submit" id="pr-save">Save design</button><button class="btn ghost" type="button" id="pr-cancel" hidden>Cancel</button></div>
+            <p class="form-msg err" id="pr-error" hidden></p>
+          </form>
+          <div class="list" id="preset-list"></div>
         </section>
       </div>
     </div>
